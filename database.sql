@@ -14,6 +14,14 @@ CREATE TABLE `user` (
   `changed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NOT NULL DEFAULT 0);
 
+CREATE TABLE `token` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `serial` char(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` timestamp NOT NULL DEFAULT DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 12 HOUR));
+ALTER TABLE token ADD FOREIGN KEY (user_id) REFERENCES user(id);
+
 CREATE TABLE `lecture` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `prof_id` int NOT NULL,
