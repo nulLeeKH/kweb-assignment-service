@@ -5,7 +5,7 @@ USE kweb;
 CREATE TABLE `user` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
-  `password` char(64) NOT NULL,
+  `password` char(128) NOT NULL,
   `salt` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `unique_no` char(10) DEFAULT NULL,
