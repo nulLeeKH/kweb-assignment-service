@@ -33,6 +33,7 @@
     "eslint-plugin-tsdoc": "^0.2.14",
     "mysql2": "^2.3.3",
     "prettier": "^2.2.1",
+    "rand-token": "^1.0.1",
     "ts-jest": "^26.4.4",
     "ts-node": "^10.7.0",
     "tsconfig-paths": "^3.13.0",
