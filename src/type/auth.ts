@@ -1,6 +1,6 @@
-import { ITypeId, ITypeUserData } from './common'
+import { ITypeId, ITypeUser } from './common'
 
-interface ITypeUserCertData {
+interface ITypeUserCert {
   password: string
 }
 
@@ -19,13 +19,13 @@ export interface ITypeSignInData {
   password: string
 }
 
-export interface ITypeSignUpData extends ITypeUserData, ITypeUserCertData {
+export interface ITypeSignUpData extends ITypeUser, ITypeUserCert {
   salt: string
 }
 
-export interface ITypeTokenPayload extends ITypeUserData, ITypeId {}
+export interface ITypeTokenPayload extends ITypeUser, ITypeId {}
 
-export interface ITypeSignUpReqBody extends ITypeUserData, ITypeUserCertData {}
+export interface ITypeSignUpReqBody extends ITypeUser, ITypeUserCert {}
 export interface ITypeSignUpResBody {
   username: string
 }

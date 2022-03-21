@@ -8,7 +8,7 @@ export interface ITypeTimestamps {
   deletedAt: Date
 }
 
-export interface ITypeUserData {
+export interface ITypeUser {
   username: string
   name: string
   uniqueNo: string
