@@ -5,7 +5,6 @@ import {
   ITypeTokenData} from "../type/auth";
 import {JwtPayload} from "jsonwebtoken";
 import {User} from "../domain/auth";
-import { getTokenRepo } from "../repository/token";
 import { config as envConfig } from 'dotenv'
 envConfig()
 

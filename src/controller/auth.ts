@@ -11,8 +11,7 @@ import {
   ITypeRefreshToken,
   ITypeTokenData
 } from '../type/auth'
-import {addUser, findUserByUsername, findUserById} from '../service/auth'
-import {addToken, checkToken} from '../service/token'
+import {userService, tokenService} from '../service/auth'
 import { digestPassword } from '../util/digester'
 import {sign} from '../util/jwt'
 import {User} from "../domain/auth";
@@ -27,7 +26,7 @@ class authControllerClass {
       const digestResult = digestPassword(data.password, undefined)
       data.password = digestResult[0]
       data.salt = digestResult[1]
-      const code = await addUser(data)
+      const code = await userService.addUser(data)
       if (code) {
         return { username: data.username }
       } else {
@@ -43,7 +42,7 @@ class authControllerClass {
   async siController(body: ITypeSignInReqBody): Promise<ITypeSignInResBody | string> {
     try {
       const data: ITypeSignInData = <ITypeSignInData>body
-      const user = await findUserByUsername(data.username)
+      const user = await userService.findUserByUsername(data.username)
       if (undefined == user) return 'err'
 
       const digestResult = digestPassword(data.password, user.salt)
@@ -51,7 +50,7 @@ class authControllerClass {
 
       const token: ITypeTokenData = await sign(user)
 
-      await addToken(Number(user.id), token.refresh)
+      await tokenService.addToken(Number(user.id), token.refresh)
 
       return token
     } catch (e: any) {
@@ -64,15 +63,15 @@ class authControllerClass {
   async rfController(body: ITypeRefreshReqBody): Promise<ITypeRefreshResBody | string> {
     try {
       const data: ITypeRefreshToken = <ITypeRefreshToken>body
-      const userId = await checkToken(data.refresh)
+      const userId = await tokenService.checkToken(data.refresh)
       if (undefined == userId) return 'err'
 
-      const user: User | undefined = await findUserById(Number(userId))
+      const user: User | undefined = await userService.findUserById(Number(userId))
       if (undefined == user) return 'err'
 
       const token: ITypeTokenData = await sign(user)
 
-      await addToken(Number(user.id), token.refresh)
+      await tokenService.addToken(Number(user.id), token.refresh)
 
       return token
     } catch (e: any) {

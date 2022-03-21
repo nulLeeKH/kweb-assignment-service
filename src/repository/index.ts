@@ -1,5 +1,6 @@
-import { refreshUserRepo } from './auth'
-import { refreshTokenRepo } from "./token";
+import {
+  refreshUserRepo,
+  refreshTokenRepo} from './auth'
 
 export function refreshAllRepo(): void {
   refreshUserRepo()
