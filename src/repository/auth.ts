@@ -1,7 +1,6 @@
 import { EntityRepository, getConnection, Repository } from 'typeorm'
-import { User } from '../domain/auth'
+import { User, Token } from '../domain/auth'
 import { ITypeSignUpData } from '../type/auth'
-import { Token } from '../domain/token'
 // import logger from "../util/logger";
 
 @EntityRepository(User)
