@@ -1,12 +1,7 @@
-interface ITypeUserData {
-  username: string,
-  name: string,
-  uniqueNo: string,
-  type: string,
-}
+import { ITypeId, ITypeUserData } from './common'
 
 interface ITypeUserCertData {
-  password: string,
+  password: string
 }
 
 export interface ITypeAccessToken {
@@ -20,7 +15,7 @@ export interface ITypeRefreshToken {
 export interface ITypeTokenData extends ITypeAccessToken, ITypeRefreshToken {}
 
 export interface ITypeSignInData {
-  username: string,
+  username: string
   password: string
 }
 
@@ -28,7 +23,7 @@ export interface ITypeSignUpData extends ITypeUserData, ITypeUserCertData {
   salt: string
 }
 
-export interface ITypeTokenPayload extends ITypeUserData {}
+export interface ITypeTokenPayload extends ITypeUserData, ITypeId {}
 
 export interface ITypeSignUpReqBody extends ITypeUserData, ITypeUserCertData {}
 export interface ITypeSignUpResBody {

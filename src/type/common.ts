@@ -7,3 +7,10 @@ export interface ITypeTimestamps {
   updatedAt: Date
   deletedAt: Date
 }
+
+export interface ITypeUserData {
+  username: string
+  name: string
+  uniqueNo: string
+  type: string
+}
