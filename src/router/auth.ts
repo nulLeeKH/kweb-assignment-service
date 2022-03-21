@@ -1,19 +1,14 @@
 import { Request, Response } from 'express'
 import authController from '../controller/auth'
 import {
-  ITypeSignUpData,
   ITypeSignUpReqBody,
   ITypeSignUpResBody,
   ITypeSignInReqBody,
   ITypeSignInResBody,
   ITypeRefreshReqBody,
-  ITypeRefreshResBody,
-  ITypeSignInData,
-  ITypeRefreshToken,
-  ITypeTokenData
+  ITypeRefreshResBody
 } from '../type/auth'
 import controller from '../class/controller'
-import { UAParser } from 'ua-parser-js'
 import { loggedRouter, loggedInitializer } from '../util/logger'
 
 class PUController extends controller {

@@ -1,9 +1,7 @@
 import { EntityRepository, getConnection, Repository } from 'typeorm'
 import { User } from '../domain/auth'
-import { ITypeSignUpData } from "../type/auth";
-import {Token} from "../domain/token";
-import logger from "../util/logger";
-
+import { ITypeSignUpData } from '../type/auth'
+import { Token } from '../domain/token'
 // import logger from "../util/logger";
 
 @EntityRepository(User)
@@ -32,21 +30,16 @@ class UserRepository extends Repository<User> {
   }
 
   findByUsername(username: string): Promise<User | undefined> {
-    return this.createQueryBuilder('user')
-      .where('user.username = :username', { username: username })
-      .getOneOrFail()
+    return this.createQueryBuilder('user').where('user.username = :username', { username: username }).getOneOrFail()
   }
 
   findById(userId: number): Promise<User | undefined> {
-    return this.createQueryBuilder('user')
-      .where('user.id = :userId', { userId: userId })
-      .getOneOrFail()
+    return this.createQueryBuilder('user').where('user.id = :userId', { userId: userId }).getOneOrFail()
   }
 
   signIn(username: string, password: string): Promise<User | boolean> {
     return this.createQueryBuilder('user')
-      .where('user.username = :username AND user.password = :password',
-        { username: username, password: password})
+      .where('user.username = :username AND user.password = :password', { username: username, password: password })
       .getOneOrFail()
       .then((user: User) => {
         return user
@@ -73,7 +66,7 @@ class TokenRepository extends Repository<Token> {
       .then((token: Token) => {
         const now: Date = new Date()
         if (Number(token.deletedAt) < Number(now)) return undefined
-        return this.update({serial: serial}, {deletedAt: now})
+        return this.update({ serial: serial }, { deletedAt: now })
           .then(() => {
             return Number(token.userId)
           })
