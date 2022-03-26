@@ -1,4 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, AfterLoad, BeforeInsert, BeforeUpdate } from 'typeorm'
+import * as crypto from 'crypto'
+import { config as envConfig } from 'dotenv'
+envConfig()
 
 @Entity({
   name: 'user'
@@ -71,6 +74,37 @@ export class User {
     nullable: false
   })
   deletedAt?: Date
+
+  decrypt(source: string): string {
+    const decipher = crypto.createDecipheriv(
+      'aes-256-cbc',
+      Buffer.from(String(process.env.DB_AES_KEY)),
+      String(process.env.DB_AES_IV)
+    )
+    return decipher.update(source, 'base64', 'utf8') + decipher.final('utf8')
+  }
+
+  @AfterLoad()
+  async DecryptedUser() {
+    this.name = this.decrypt(String(this.name))
+    this.uniqueNo = this.decrypt(String(this.uniqueNo))
+  }
+
+  encrypt(source: string): string {
+    const cipher = crypto.createCipheriv(
+      'aes-256-cbc',
+      Buffer.from(String(process.env.DB_AES_KEY)),
+      String(process.env.DB_AES_IV)
+    )
+    return cipher.update(source, 'utf8', 'base64') + cipher.final('base64')
+  }
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async EncryptedUser() {
+    this.name = this.encrypt(String(this.name))
+    this.uniqueNo = this.encrypt(String(this.uniqueNo))
+  }
 }
 
 @Entity({

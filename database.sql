@@ -8,7 +8,7 @@ CREATE TABLE `user` (
   `password` char(128) NOT NULL,
   `salt` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `unique_no` char(10) DEFAULT NULL,
+  `unique_no` char(255) DEFAULT NULL,
   `type` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `changed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

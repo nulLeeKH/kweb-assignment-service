@@ -7,6 +7,8 @@ declare global {
       JWT_SECRET:string
       ACCESS_TOKEN_LIFE:number
       REFRESH_TOKEN_LIFE:number
+      DB_AES_KEY:string
+      DB_AES_IV:string
       DB_HOST:string
       DB_PORT:number
       DB_USERNAME:string
