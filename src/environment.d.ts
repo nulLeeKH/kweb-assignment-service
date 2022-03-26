@@ -4,7 +4,6 @@ declare global {
       SERVICE_PORT:number
       SERVICE_ROUTE:string
       ITERATION:number
-      JWT_SECRET:string
       ACCESS_TOKEN_LIFE:number
       REFRESH_TOKEN_LIFE:number
       DB_AES_KEY:string

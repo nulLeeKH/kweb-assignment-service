@@ -14,3 +14,10 @@ export interface ITypeUser {
   uniqueNo: string
   type: string
 }
+
+export interface ITypeTokenPayload extends ITypeId {
+  un: string
+  nm: string
+  no: string
+  tp: string
+}
