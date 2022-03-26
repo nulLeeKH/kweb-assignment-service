@@ -1,5 +1,11 @@
 import logger, { loggedController } from '../util/logger'
-import { ITypeBoardAddReqBody, ITypeLectureAddReqBody } from '../type/lms'
+import {
+  ITypeTitle,
+  ITypeBoardAddReqBody,
+  ITypeBoardListReqBody,
+  ITypeBoardListResBody,
+  ITypeLectureAddReqBody
+} from '../type/lms'
 import { lmsService } from '../service/lms'
 import { JwtPayload } from 'jsonwebtoken'
 // import { HttpException } from '../middleware/errorHandler';
@@ -27,6 +33,24 @@ class lmsControllerClass {
         return 'err'
       }
       return 'done'
+    } catch (e: any) {
+      logger.error(e.stack)
+    }
+    return 'err'
+  }
+
+  @loggedController('lms', 'board_list')
+  async boardListController(payload: JwtPayload, body: ITypeBoardListReqBody): Promise<ITypeBoardListResBody | string> {
+    try {
+      const list = await lmsService.listBoardByLectureId(body.id)
+      if (undefined == list) {
+        return 'err'
+      }
+      const result: ITypeBoardListResBody = { list: [] }
+      for (const post of list) {
+        result.list[result.list.length] = <ITypeTitle>{ id: post.id, title: post.title }
+      }
+      return result
     } catch (e: any) {
       logger.error(e.stack)
     }

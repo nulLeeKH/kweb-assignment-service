@@ -1,14 +1,14 @@
 import { ITypeId } from './common'
 
-interface ITypeTitle {
+export interface ITypeTitle extends ITypeId {
   title: string
 }
 
-interface ITypePost extends ITypeTitle {
+export interface ITypePost extends ITypeTitle {
   content: string
 }
 
-interface ITypeBoardDetail extends ITypePost {}
+export interface ITypeBoardDetail extends ITypePost {}
 
 export interface ITypeLectureAddReqBody extends ITypeTitle {}
 
