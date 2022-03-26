@@ -5,22 +5,8 @@ import { JwtPayload } from 'jsonwebtoken'
 // import { HttpException } from '../middleware/errorHandler';
 
 class lmsControllerClass {
-  @loggedController('lms', 'add_lecture')
+  @loggedController('lms', 'lecture_add')
   async lectureAddController(payload: JwtPayload, body: ITypeLectureAddReqBody): Promise<string> {
-    try {
-      const result = await lmsService.addLecture(payload.id, body.title)
-      if (undefined == result) {
-        return 'err'
-      }
-      return 'done'
-    } catch (e: any) {
-      logger.error(e.stack)
-    }
-    return 'err'
-  }
-
-  @loggedController('lms', 'add_lecture')
-  async addLectureController(payload: JwtPayload, body: ITypeLectureAddReqBody): Promise<string> {
     try {
       const result = await lmsService.addLecture(payload.id, body.title)
       if (undefined == result) {
