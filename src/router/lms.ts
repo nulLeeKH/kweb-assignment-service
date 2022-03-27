@@ -36,7 +36,7 @@ class LmsController extends controller {
     }
   }
 
-  @loggedRouter('lms', 'su')
+  @loggedRouter('lms', 'la')
   private async laRoute(req: Request<undefined, undefined, ITypeLectureAddReqBody, undefined>, res: Response) {
     const authHeader = req.header('Authorization')
     if (undefined == authHeader) {
