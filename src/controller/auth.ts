@@ -11,14 +11,14 @@ import {
   ITypeRefreshToken,
   ITypeTokenData
 } from '../type/auth'
-import {userService, tokenService} from '../service/auth'
+import { userService, tokenService } from '../service/auth'
 import { digestPassword } from '../util/digester'
-import {sign} from '../util/jwt'
-import {User} from "../domain/auth";
+import { sign } from '../util/jwt'
+import { User } from '../domain/auth'
 
 // import { HttpException } from '../middleware/errorHandler';
 
-class authControllerClass {
+class AuthControllerClass {
   @loggedController('auth', 'su')
   async suController(body: ITypeSignUpReqBody): Promise<ITypeSignUpResBody | string> {
     try {
@@ -46,7 +46,7 @@ class authControllerClass {
       if (undefined == user) return 'err'
 
       const digestResult = digestPassword(data.password, user.salt)
-      if (digestResult[0] != user.password) return 'err';
+      if (digestResult[0] != user.password) return 'err'
 
       const token: ITypeTokenData = await sign(user)
 
@@ -81,5 +81,5 @@ class authControllerClass {
   }
 }
 
-const authController = new authControllerClass()
+const authController = new AuthControllerClass()
 export default authController
