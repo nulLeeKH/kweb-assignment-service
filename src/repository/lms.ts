@@ -46,7 +46,7 @@ class BoardRepository extends Repository<Board> {
 
 @EntityRepository(Enrolment)
 class EnrolmentRepository extends Repository<Enrolment> {
-  add(lectureId: number, stdtId: number): Promise<Enrolment> {
+  add(stdtId: number, lectureId: number): Promise<Enrolment> {
     const newEnrolment = new Enrolment()
     newEnrolment.lectureId = lectureId
     newEnrolment.stdtId = stdtId

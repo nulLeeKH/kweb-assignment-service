@@ -67,9 +67,9 @@ class LmsService {
     return undefined
   }
 
-  async addEnrolment(lectureId: number, stdtId: number): Promise<Enrolment | undefined> {
+  async addEnrolment(stdtId: number, lectureId: number): Promise<Enrolment | undefined> {
     try {
-      return await getEnrolmentRepo().add(lectureId, stdtId)
+      return await getEnrolmentRepo().add(stdtId, lectureId)
     } catch (e: any) {
       logger.error(e.stack)
     }
