@@ -6,6 +6,7 @@ declare global {
       ITERATION:number
       ACCESS_TOKEN_LIFE:number
       REFRESH_TOKEN_LIFE:number
+      JWT_ISSUER:string
       DB_AES_KEY:string
       DB_AES_IV:string
       DB_HOST:string
