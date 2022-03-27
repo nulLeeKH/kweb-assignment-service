@@ -15,7 +15,7 @@ import { Lecture } from '../domain/lms'
 
 // import { HttpException } from '../middleware/errorHandler';
 
-class lmsControllerClass {
+class LmsControllerClass {
   @loggedController('lms', 'lecture_add')
   async lectureAddController(payload: JwtPayload, body: ITypeLectureAddReqBody): Promise<string> {
     try {
@@ -124,5 +124,5 @@ class lmsControllerClass {
   }
 }
 
-const lmsController = new lmsControllerClass()
+const lmsController = new LmsControllerClass()
 export default lmsController
