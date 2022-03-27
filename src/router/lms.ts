@@ -38,12 +38,12 @@ class LmsController extends controller {
 
   @loggedRouter('lms', 'su')
   private async laRoute(req: Request<undefined, undefined, ITypeLectureAddReqBody, undefined>, res: Response) {
-    const authHeader = req.get('Authorization')
+    const authHeader = req.header('Authorization')
     if (undefined == authHeader) {
       res.status(401).json()
       return [401, {}]
     }
-    const jwtPayload: JwtPayload | string = verify(authHeader.split(' ')[1])
+    const jwtPayload: JwtPayload | string = verify(authHeader)
     if ('string' == typeof jwtPayload) {
       res.status(401).json()
       return [401, {}]
@@ -64,12 +64,12 @@ class LmsController extends controller {
 
   @loggedRouter('lms', 'll')
   private async llRoute(req: Request, res: Response) {
-    const authHeader = req.get('Authorization')
+    const authHeader = req.header('Authorization')
     if (undefined == authHeader) {
       res.status(401).json()
       return [401, {}]
     }
-    const jwtPayload: JwtPayload | string = verify(authHeader.split(' ')[1])
+    const jwtPayload: JwtPayload | string = verify(authHeader)
     if ('string' == typeof jwtPayload) {
       res.status(401).json()
       return [401, {}]
@@ -88,12 +88,12 @@ class LmsController extends controller {
 
   @loggedRouter('lms', 'ba')
   private async baRoute(req: Request<undefined, undefined, ITypeBoardAddReqBody, undefined>, res: Response) {
-    const authHeader = req.get('Authorization')
+    const authHeader = req.header('Authorization')
     if (undefined == authHeader) {
       res.status(401).json()
       return [401, {}]
     }
-    const jwtPayload: JwtPayload | string = verify(authHeader.split(' ')[1])
+    const jwtPayload: JwtPayload | string = verify(authHeader)
     if ('string' == typeof jwtPayload) {
       res.status(401).json()
       return [401, {}]
@@ -114,12 +114,12 @@ class LmsController extends controller {
 
   @loggedRouter('lms', 'bl')
   private async blRoute(req: Request<undefined, undefined, ITypeBoardListReqBody, undefined>, res: Response) {
-    const authHeader = req.get('Authorization')
+    const authHeader = req.header('Authorization')
     if (undefined == authHeader) {
       res.status(401).json()
       return [401, {}]
     }
-    const jwtPayload: JwtPayload | string = verify(authHeader.split(' ')[1])
+    const jwtPayload: JwtPayload | string = verify(authHeader)
     if ('string' == typeof jwtPayload) {
       res.status(401).json()
       return [401, {}]
@@ -138,12 +138,12 @@ class LmsController extends controller {
 
   @loggedRouter('lms', 'bd')
   private async bdRoute(req: Request<undefined, undefined, ITypeBoardDetailReqBody, undefined>, res: Response) {
-    const authHeader = req.get('Authorization')
+    const authHeader = req.header('Authorization')
     if (undefined == authHeader) {
       res.status(401).json()
       return [401, {}]
     }
-    const jwtPayload: JwtPayload | string = verify(authHeader.split(' ')[1])
+    const jwtPayload: JwtPayload | string = verify(authHeader)
     if ('string' == typeof jwtPayload) {
       res.status(401).json()
       return [401, {}]
