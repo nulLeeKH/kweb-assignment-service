@@ -1,6 +1,7 @@
 import logger, { loggedController } from '../util/logger'
 import {
   ITypeBoardAddReqBody,
+  ITypeBoardAddReqQuery,
   ITypeBoardDetailReqQuery,
   ITypeBoardDetailResBody,
   ITypeBoardListReqQuery,
@@ -101,9 +102,9 @@ class LmsControllerClass {
   }
 
   @loggedController('lms', 'board_add')
-  async boardAddController(payload: JwtPayload, body: ITypeBoardAddReqBody): Promise<string> {
+  async boardAddController(body: ITypeBoardAddReqBody, query: ITypeBoardAddReqQuery): Promise<string> {
     try {
-      const result = await lmsService.addBoard(payload.id, body.title, body.content)
+      const result = await lmsService.addBoard(query.id, body.title, body.content)
       if (undefined == result) {
         return 'err'
       }

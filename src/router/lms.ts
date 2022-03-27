@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import lmsController from '../controller/lms'
 import {
   ITypeBoardAddReqBody,
+  ITypeBoardAddReqQuery,
   ITypeBoardDetailReqQuery,
   ITypeBoardDetailResBody,
   ITypeBoardListReqQuery,
@@ -119,7 +120,10 @@ class LmsController extends controller {
   }
 
   @loggedRouter('lms', 'ba')
-  private async baRoute(req: Request<undefined, undefined, ITypeBoardAddReqBody, undefined>, res: Response) {
+  private async baRoute(
+    req: Request<undefined, undefined, ITypeBoardAddReqBody, ITypeBoardAddReqQuery>,
+    res: Response
+  ) {
     const authHeader = req.header('Authorization')
     if (undefined == authHeader) {
       res.status(401).json()
@@ -132,7 +136,7 @@ class LmsController extends controller {
     }
 
     const result = {
-      result: await lmsController.boardAddController(jwtPayload, req.body)
+      result: await lmsController.boardAddController(req.body, req.query)
     }
 
     if (result.result == 'err') {

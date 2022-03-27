@@ -18,6 +18,8 @@ export interface ITypeEnrolAddReqQuery extends ITypeId {}
 
 export interface ITypeBoardAddReqBody extends ITypePost {}
 
+export interface ITypeBoardAddReqQuery extends ITypeId {}
+
 export interface ITypeLectureListReqQuery {
   all: string
 }
