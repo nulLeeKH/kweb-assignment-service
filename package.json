@@ -1,5 +1,5 @@
 {
-  "name": "kweb-assignment",
+  "name": "kweb-assignment-service",
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon --ext js,ts,json,env src/index.ts",
