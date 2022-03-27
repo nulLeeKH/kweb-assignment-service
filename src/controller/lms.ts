@@ -7,7 +7,7 @@ import {
   ITypeBoardListResBody,
   ITypeLectureAddReqBody,
   ITypeLectureListResBody,
-  ITypeTitle
+  ITypeTitleWithId
 } from '../type/lms'
 import { lmsService } from '../service/lms'
 import { JwtPayload } from 'jsonwebtoken'
@@ -93,7 +93,7 @@ class LmsControllerClass {
       }
       const result: ITypeBoardListResBody = { list: [] }
       for (const post of list) {
-        result.list[result.list.length] = <ITypeTitle>{ id: post.id, title: post.title }
+        result.list[result.list.length] = <ITypeTitleWithId>{ id: post.id, title: post.title }
       }
       return result
     } catch (e: any) {
