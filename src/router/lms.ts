@@ -26,10 +26,10 @@ class LmsController extends controller {
   private initializeRoutes() {
     try {
       this.router.post('/lecture/add', this.laRoute)
-      this.router.post('/lecture/list', this.llRoute)
+      this.router.get('/lecture/list', this.llRoute)
       this.router.post('/board/add', this.baRoute)
-      this.router.post('/board/list', this.blRoute)
-      this.router.post('/board/detail', this.bdRoute)
+      this.router.get('/board/list', this.blRoute)
+      this.router.get('/board/detail', this.bdRoute)
       return ''
     } catch (e: any) {
       return e.stack
@@ -113,7 +113,7 @@ class LmsController extends controller {
   }
 
   @loggedRouter('lms', 'bl')
-  private async blRoute(req: Request<undefined, undefined, ITypeBoardListReqBody, undefined>, res: Response) {
+  private async blRoute(req: Request<undefined, undefined, undefined, ITypeBoardListReqBody>, res: Response) {
     const authHeader = req.header('Authorization')
     if (undefined == authHeader) {
       res.status(401).json()
@@ -125,7 +125,7 @@ class LmsController extends controller {
       return [401, {}]
     }
 
-    const result: ITypeBoardListResBody | string = await lmsController.boardListController(jwtPayload, req.body)
+    const result: ITypeBoardListResBody | string = await lmsController.boardListController(jwtPayload, req.query)
 
     if (result == 'err') {
       res.status(500).json()
@@ -137,7 +137,7 @@ class LmsController extends controller {
   }
 
   @loggedRouter('lms', 'bd')
-  private async bdRoute(req: Request<undefined, undefined, ITypeBoardDetailReqBody, undefined>, res: Response) {
+  private async bdRoute(req: Request<undefined, undefined, undefined, ITypeBoardDetailReqBody>, res: Response) {
     const authHeader = req.header('Authorization')
     if (undefined == authHeader) {
       res.status(401).json()
@@ -149,7 +149,7 @@ class LmsController extends controller {
       return [401, {}]
     }
 
-    const result: ITypeBoardDetailResBody | string = await lmsController.boardDetailController(jwtPayload, req.body)
+    const result: ITypeBoardDetailResBody | string = await lmsController.boardDetailController(jwtPayload, req.query)
 
     if (result == 'err') {
       res.status(500).json()
