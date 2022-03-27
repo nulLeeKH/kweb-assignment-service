@@ -6,10 +6,12 @@ import {
   ITypeBoardListReqBody,
   ITypeBoardListResBody,
   ITypeLectureAddReqBody,
+  ITypeLectureListResBody,
   ITypeTitle
 } from '../type/lms'
 import { lmsService } from '../service/lms'
 import { JwtPayload } from 'jsonwebtoken'
+import { Lecture } from '../domain/lms'
 
 // import { HttpException } from '../middleware/errorHandler';
 
@@ -22,6 +24,46 @@ class lmsControllerClass {
         return 'err'
       }
       return 'done'
+    } catch (e: any) {
+      logger.error(e.stack)
+    }
+    return 'err'
+  }
+
+  @loggedController('lms', 'lecture_list')
+  async lectureListController(payload: JwtPayload): Promise<ITypeLectureListResBody | string> {
+    try {
+      const result: ITypeLectureListResBody = {
+        list: []
+      }
+      let lectures: Lecture[] = []
+      if ('prof' == payload.tp) {
+        const temp = await lmsService.listLectureByProfId(payload.id)
+        if (undefined == temp) {
+          return 'err'
+        }
+        lectures = temp
+      } else if ('stdt' == payload.tp) {
+        const enrolments = await lmsService.listEnrolmentByStdtId(payload.id)
+        if (undefined == enrolments) {
+          return 'err'
+        }
+        for (const enrolment of enrolments) {
+          const temp = await lmsService.getLecture(Number(enrolment.lectureId))
+          if (undefined == temp) {
+            return 'err'
+          }
+          lectures[lectures.length] = temp
+        }
+      }
+
+      for (const lecture of lectures) {
+        result.list[result.list.length] = {
+          id: Number(lecture.id),
+          title: String(lecture.title)
+        }
+      }
+      return result
     } catch (e: any) {
       logger.error(e.stack)
     }

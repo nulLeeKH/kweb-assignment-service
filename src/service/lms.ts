@@ -13,6 +13,15 @@ class LmsService {
     return undefined
   }
 
+  async getLecture(lectureId: number): Promise<Lecture | undefined> {
+    try {
+      return await getLectureRepo().get(lectureId)
+    } catch (e: any) {
+      logger.error(e.stack)
+    }
+    return undefined
+  }
+
   async listLectureByProfId(profId: number): Promise<Lecture[] | undefined> {
     try {
       return await getLectureRepo().listByProfId(profId)

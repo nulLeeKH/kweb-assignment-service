@@ -14,6 +14,10 @@ export interface ITypeLectureAddReqBody extends ITypeTitle {}
 
 export interface ITypeBoardAddReqBody extends ITypeBoardDetail {}
 
+export interface ITypeLectureListResBody {
+  list: ITypeTitle[]
+}
+
 export interface ITypeBoardListReqBody extends ITypeId {}
 export interface ITypeBoardListResBody {
   list: ITypeTitle[]
