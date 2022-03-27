@@ -40,6 +40,15 @@ class LmsService {
     return undefined
   }
 
+  async detailBoardByBoardId(boardId: number): Promise<Board | undefined> {
+    try {
+      return await getBoardRepo().detailByBoardId(boardId)
+    } catch (e: any) {
+      logger.error(e.stack)
+    }
+    return undefined
+  }
+
   async addEnrolment(lectureId: number, stdtId: number): Promise<Enrolment | undefined> {
     try {
       return await getEnrolmentRepo().add(lectureId, stdtId)

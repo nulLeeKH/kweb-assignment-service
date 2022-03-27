@@ -27,6 +27,10 @@ class BoardRepository extends Repository<Board> {
     return this.save(newBoard)
   }
 
+  detailByBoardId(boardId: number): Promise<Board> {
+    return this.createQueryBuilder('board').where('board.id = :boardId', { boardId: boardId }).getOneOrFail()
+  }
+
   listByLectureId(lectureId: number): Promise<Board[]> {
     return this.createQueryBuilder('board').where('board.lecture_id = :lectureId', { lectureId: lectureId }).getMany()
   }
