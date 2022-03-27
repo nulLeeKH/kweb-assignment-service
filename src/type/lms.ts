@@ -14,6 +14,8 @@ export interface ITypePostWithId extends ITypePost, ITypeId {}
 
 export interface ITypeLectureAddReqBody extends ITypeTitle {}
 
+export interface ITypeEnrolAddReqBody extends ITypeId {}
+
 export interface ITypeBoardAddReqBody extends ITypePost {}
 
 export interface ITypeLectureListReqBody {

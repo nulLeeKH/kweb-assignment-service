@@ -5,6 +5,7 @@ import {
   ITypeBoardDetailResBody,
   ITypeBoardListReqBody,
   ITypeBoardListResBody,
+  ITypeEnrolAddReqBody,
   ITypeLectureAddReqBody,
   ITypeLectureListResBody,
   ITypeTitleWithId
@@ -71,6 +72,20 @@ class LmsControllerClass {
         }
       }
       return result
+    } catch (e: any) {
+      logger.error(e.stack)
+    }
+    return 'err'
+  }
+
+  @loggedController('lms', 'enrol_add')
+  async enrolAddController(payload: JwtPayload, body: ITypeEnrolAddReqBody): Promise<string> {
+    try {
+      const result = await lmsService.addEnrolment(payload.id, body.id)
+      if (undefined == result) {
+        return 'err'
+      }
+      return 'done'
     } catch (e: any) {
       logger.error(e.stack)
     }

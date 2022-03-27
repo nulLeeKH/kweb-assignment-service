@@ -6,6 +6,7 @@ import {
   ITypeBoardDetailResBody,
   ITypeBoardListReqBody,
   ITypeBoardListResBody,
+  ITypeEnrolAddReqBody,
   ITypeLectureAddReqBody,
   ITypeLectureListReqBody,
   ITypeLectureListResBody
@@ -28,6 +29,7 @@ class LmsController extends controller {
     try {
       this.router.post('/lecture/add', this.laRoute)
       this.router.get('/lecture/list', this.llRoute)
+      this.router.get('/enrol/add', this.eaRoute)
       this.router.post('/board/add', this.baRoute)
       this.router.get('/board/list', this.blRoute)
       this.router.get('/board/detail', this.bdRoute)
@@ -82,6 +84,32 @@ class LmsController extends controller {
     )
 
     if (result == 'err') {
+      res.status(500).json()
+      return [500, {}]
+    } else {
+      res.json(result)
+      return [200, result]
+    }
+  }
+
+  @loggedRouter('lms', 'ea')
+  private async eaRoute(req: Request<undefined, undefined, undefined, ITypeEnrolAddReqBody>, res: Response) {
+    const authHeader = req.header('Authorization')
+    if (undefined == authHeader) {
+      res.status(401).json()
+      return [401, {}]
+    }
+    const jwtPayload: JwtPayload | string = verify(authHeader)
+    if ('string' == typeof jwtPayload) {
+      res.status(401).json()
+      return [401, {}]
+    }
+
+    const result = {
+      result: await lmsController.enrolAddController(jwtPayload, req.query)
+    }
+
+    if (result.result == 'err') {
       res.status(500).json()
       return [500, {}]
     } else {
