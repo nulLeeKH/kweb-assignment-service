@@ -1,11 +1,11 @@
 import logger, { loggedController } from '../util/logger'
 import {
   ITypeBoardAddReqBody,
-  ITypeBoardDetailReqBody,
+  ITypeBoardDetailReqQuery,
   ITypeBoardDetailResBody,
-  ITypeBoardListReqBody,
+  ITypeBoardListReqQuery,
   ITypeBoardListResBody,
-  ITypeEnrolAddReqBody,
+  ITypeEnrolAddReqQuery,
   ITypeLectureAddReqBody,
   ITypeLectureListResBody,
   ITypeTitleWithId
@@ -80,9 +80,16 @@ class LmsControllerClass {
   }
 
   @loggedController('lms', 'enrol_add')
-  async enrolAddController(payload: JwtPayload, body: ITypeEnrolAddReqBody): Promise<string> {
+  async enrolAddController(payload: JwtPayload, query: ITypeEnrolAddReqQuery): Promise<string> {
     try {
-      const result = await lmsService.addEnrolment(payload.id, body.id)
+      const enrolments = await lmsService.listEnrolmentByStdtId(payload.id)
+      if (undefined == enrolments) {
+        return 'err'
+      }
+      for (const enrolment of enrolments) {
+        if (query.id == enrolment.lectureId) return 'err'
+      }
+      const result = await lmsService.addEnrolment(payload.id, query.id)
       if (undefined == result) {
         return 'err'
       }
@@ -108,9 +115,12 @@ class LmsControllerClass {
   }
 
   @loggedController('lms', 'board_list')
-  async boardListController(payload: JwtPayload, body: ITypeBoardListReqBody): Promise<ITypeBoardListResBody | string> {
+  async boardListController(
+    payload: JwtPayload,
+    query: ITypeBoardListReqQuery
+  ): Promise<ITypeBoardListResBody | string> {
     try {
-      const list = await lmsService.listBoardByLectureId(body.id)
+      const list = await lmsService.listBoardByLectureId(query.id)
       if (undefined == list) {
         return 'err'
       }
@@ -128,10 +138,10 @@ class LmsControllerClass {
   @loggedController('lms', 'board_detail')
   async boardDetailController(
     payload: JwtPayload,
-    body: ITypeBoardDetailReqBody
+    query: ITypeBoardDetailReqQuery
   ): Promise<ITypeBoardDetailResBody | string> {
     try {
-      const result = await lmsService.detailBoardByBoardId(body.id)
+      const result = await lmsService.detailBoardByBoardId(query.id)
       if (undefined == result) {
         return 'err'
       }

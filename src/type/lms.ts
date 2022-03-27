@@ -14,21 +14,21 @@ export interface ITypePostWithId extends ITypePost, ITypeId {}
 
 export interface ITypeLectureAddReqBody extends ITypeTitle {}
 
-export interface ITypeEnrolAddReqBody extends ITypeId {}
+export interface ITypeEnrolAddReqQuery extends ITypeId {}
 
 export interface ITypeBoardAddReqBody extends ITypePost {}
 
-export interface ITypeLectureListReqBody {
+export interface ITypeLectureListReqQuery {
   all: string
 }
 export interface ITypeLectureListResBody {
   list: ITypeTitleWithId[]
 }
 
-export interface ITypeBoardListReqBody extends ITypeId {}
+export interface ITypeBoardListReqQuery extends ITypeId {}
 export interface ITypeBoardListResBody {
   list: ITypeTitleWithId[]
 }
 
-export interface ITypeBoardDetailReqBody extends ITypeId {}
+export interface ITypeBoardDetailReqQuery extends ITypeId {}
 export interface ITypeBoardDetailResBody extends ITypePostWithId {}

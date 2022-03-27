@@ -2,13 +2,13 @@ import { Request, Response } from 'express'
 import lmsController from '../controller/lms'
 import {
   ITypeBoardAddReqBody,
-  ITypeBoardDetailReqBody,
+  ITypeBoardDetailReqQuery,
   ITypeBoardDetailResBody,
-  ITypeBoardListReqBody,
+  ITypeBoardListReqQuery,
   ITypeBoardListResBody,
-  ITypeEnrolAddReqBody,
+  ITypeEnrolAddReqQuery,
   ITypeLectureAddReqBody,
-  ITypeLectureListReqBody,
+  ITypeLectureListReqQuery,
   ITypeLectureListResBody
 } from '../type/lms'
 import controller from '../class/controller'
@@ -66,7 +66,7 @@ class LmsController extends controller {
   }
 
   @loggedRouter('lms', 'll')
-  private async llRoute(req: Request<undefined, undefined, undefined, ITypeLectureListReqBody>, res: Response) {
+  private async llRoute(req: Request<undefined, undefined, undefined, ITypeLectureListReqQuery>, res: Response) {
     const authHeader = req.header('Authorization')
     if (undefined == authHeader) {
       res.status(401).json()
@@ -93,7 +93,7 @@ class LmsController extends controller {
   }
 
   @loggedRouter('lms', 'ea')
-  private async eaRoute(req: Request<undefined, undefined, undefined, ITypeEnrolAddReqBody>, res: Response) {
+  private async eaRoute(req: Request<undefined, undefined, undefined, ITypeEnrolAddReqQuery>, res: Response) {
     const authHeader = req.header('Authorization')
     if (undefined == authHeader) {
       res.status(401).json()
@@ -145,7 +145,7 @@ class LmsController extends controller {
   }
 
   @loggedRouter('lms', 'bl')
-  private async blRoute(req: Request<undefined, undefined, undefined, ITypeBoardListReqBody>, res: Response) {
+  private async blRoute(req: Request<undefined, undefined, undefined, ITypeBoardListReqQuery>, res: Response) {
     const authHeader = req.header('Authorization')
     if (undefined == authHeader) {
       res.status(401).json()
@@ -169,7 +169,7 @@ class LmsController extends controller {
   }
 
   @loggedRouter('lms', 'bd')
-  private async bdRoute(req: Request<undefined, undefined, undefined, ITypeBoardDetailReqBody>, res: Response) {
+  private async bdRoute(req: Request<undefined, undefined, undefined, ITypeBoardDetailReqQuery>, res: Response) {
     const authHeader = req.header('Authorization')
     if (undefined == authHeader) {
       res.status(401).json()
