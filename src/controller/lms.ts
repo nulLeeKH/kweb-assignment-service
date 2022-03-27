@@ -43,6 +43,7 @@ class LmsControllerClass {
         if (undefined == temp) {
           return 'err'
         }
+        lectures = temp
       } else {
         if ('prof' == payload.tp) {
           const temp = await lmsService.listLectureByProfId(payload.id)
