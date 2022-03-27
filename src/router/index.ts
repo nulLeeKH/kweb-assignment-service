@@ -1,6 +1,6 @@
 import DocController from './doc'
-import PUController from './auth'
+import AuthController from './auth'
 
-const controllers: any[] = [new DocController(), new PUController()]
+const controllers: any[] = [new DocController(), new AuthController()]
 
 export default controllers

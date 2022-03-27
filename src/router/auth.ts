@@ -11,7 +11,7 @@ import {
 import controller from '../class/controller'
 import { loggedRouter, loggedInitializer } from '../util/logger'
 
-class PUController extends controller {
+class AuthController extends controller {
   public basePath = '/auth'
 
   constructor() {
@@ -68,4 +68,4 @@ class PUController extends controller {
   }
 }
 
-export default PUController
+export default AuthController
