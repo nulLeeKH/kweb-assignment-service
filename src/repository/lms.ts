@@ -16,6 +16,10 @@ class LectureRepository extends Repository<Lecture> {
     return this.createQueryBuilder('lecture').where('lecture.id = :lectureId', { lectureId: lectureId }).getOneOrFail()
   }
 
+  listAll(): Promise<Lecture[]> {
+    return this.createQueryBuilder('lecture').getMany()
+  }
+
   listByProfId(profId: number): Promise<Lecture[]> {
     return this.createQueryBuilder('lecture').where('lecture.prof_id = :profId', { profId: profId }).getMany()
   }

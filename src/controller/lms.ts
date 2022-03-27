@@ -31,29 +31,36 @@ class LmsControllerClass {
   }
 
   @loggedController('lms', 'lecture_list')
-  async lectureListController(payload: JwtPayload): Promise<ITypeLectureListResBody | string> {
+  async lectureListController(payload: JwtPayload, all: boolean): Promise<ITypeLectureListResBody | string> {
     try {
       const result: ITypeLectureListResBody = {
         list: []
       }
       let lectures: Lecture[] = []
-      if ('prof' == payload.tp) {
-        const temp = await lmsService.listLectureByProfId(payload.id)
+      if (all) {
+        const temp = await lmsService.listAllLecture()
         if (undefined == temp) {
           return 'err'
         }
-        lectures = temp
-      } else if ('stdt' == payload.tp) {
-        const enrolments = await lmsService.listEnrolmentByStdtId(payload.id)
-        if (undefined == enrolments) {
-          return 'err'
-        }
-        for (const enrolment of enrolments) {
-          const temp = await lmsService.getLecture(Number(enrolment.lectureId))
+      } else {
+        if ('prof' == payload.tp) {
+          const temp = await lmsService.listLectureByProfId(payload.id)
           if (undefined == temp) {
             return 'err'
           }
-          lectures[lectures.length] = temp
+          lectures = temp
+        } else if ('stdt' == payload.tp) {
+          const enrolments = await lmsService.listEnrolmentByStdtId(payload.id)
+          if (undefined == enrolments) {
+            return 'err'
+          }
+          for (const enrolment of enrolments) {
+            const temp = await lmsService.getLecture(Number(enrolment.lectureId))
+            if (undefined == temp) {
+              return 'err'
+            }
+            lectures[lectures.length] = temp
+          }
         }
       }
 

@@ -7,6 +7,7 @@ import {
   ITypeBoardListReqBody,
   ITypeBoardListResBody,
   ITypeLectureAddReqBody,
+  ITypeLectureListReqBody,
   ITypeLectureListResBody
 } from '../type/lms'
 import controller from '../class/controller'
@@ -63,7 +64,7 @@ class LmsController extends controller {
   }
 
   @loggedRouter('lms', 'll')
-  private async llRoute(req: Request, res: Response) {
+  private async llRoute(req: Request<undefined, undefined, undefined, ITypeLectureListReqBody>, res: Response) {
     const authHeader = req.header('Authorization')
     if (undefined == authHeader) {
       res.status(401).json()
@@ -75,7 +76,10 @@ class LmsController extends controller {
       return [401, {}]
     }
 
-    const result: ITypeLectureListResBody | string = await lmsController.lectureListController(jwtPayload)
+    const result: ITypeLectureListResBody | string = await lmsController.lectureListController(
+      jwtPayload,
+      req.query.all == 'true'
+    )
 
     if (result == 'err') {
       res.status(500).json()
