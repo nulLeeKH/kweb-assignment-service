@@ -58,9 +58,9 @@ class LmsService {
     return undefined
   }
 
-  async detailBoardByBoardId(boardId: number): Promise<Board | undefined> {
+  async detailBoardByBoardId(lectureId: number, boardId: number): Promise<Board | undefined> {
     try {
-      return await getBoardRepo().detailByBoardId(boardId)
+      return await getBoardRepo().detailByLectureIdAndBoardId(lectureId, boardId)
     } catch (e: any) {
       logger.error(e.stack)
     }

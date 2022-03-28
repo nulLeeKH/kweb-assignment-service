@@ -10,7 +10,9 @@ export interface ITypePost extends ITypeTitle {
   content: string
 }
 
-export interface ITypePostWithId extends ITypePost, ITypeId {}
+export interface ITypePostWithId extends ITypePost, ITypeId {
+  lecture_id: number
+}
 
 export interface ITypeLectureAddReqBody extends ITypeTitle {}
 
@@ -32,5 +34,7 @@ export interface ITypeBoardListResBody {
   list: ITypeTitleWithId[]
 }
 
-export interface ITypeBoardDetailReqQuery extends ITypeId {}
+export interface ITypeBoardDetailReqQuery extends ITypeId {
+  board_id: number
+}
 export interface ITypeBoardDetailResBody extends ITypePostWithId {}

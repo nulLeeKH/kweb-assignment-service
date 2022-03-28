@@ -15,7 +15,7 @@ import {
 import controller from '../class/controller'
 import { JwtPayload } from 'jsonwebtoken'
 import { loggedRouter, loggedInitializer } from '../util/logger'
-import { verify } from '../util/jwt'
+import { checkAuth, checkLecture } from '../util/permisson'
 
 class LmsController extends controller {
   public basePath = '/lms'
@@ -41,18 +41,12 @@ class LmsController extends controller {
   }
 
   @loggedRouter('lms', 'la')
-  private async laRoute(req: Request<undefined, undefined, ITypeLectureAddReqBody, undefined>, res: Response) {
-    const authHeader = req.header('Authorization')
-    if (undefined == authHeader) {
-      res.status(401).json()
-      return [401, {}]
-    }
-    const jwtPayload: JwtPayload | string = verify(authHeader)
-    if ('string' == typeof jwtPayload) {
-      res.status(401).json()
-      return [401, {}]
-    }
-
+  @checkAuth('prof')
+  private async laRoute(
+    req: Request<undefined, undefined, ITypeLectureAddReqBody, undefined>,
+    res: Response,
+    jwtPayload: JwtPayload
+  ) {
     const result = {
       result: await lmsController.lectureAddController(jwtPayload, req.body)
     }
@@ -67,18 +61,12 @@ class LmsController extends controller {
   }
 
   @loggedRouter('lms', 'll')
-  private async llRoute(req: Request<undefined, undefined, undefined, ITypeLectureListReqQuery>, res: Response) {
-    const authHeader = req.header('Authorization')
-    if (undefined == authHeader) {
-      res.status(401).json()
-      return [401, {}]
-    }
-    const jwtPayload: JwtPayload | string = verify(authHeader)
-    if ('string' == typeof jwtPayload) {
-      res.status(401).json()
-      return [401, {}]
-    }
-
+  @checkAuth('all')
+  private async llRoute(
+    req: Request<undefined, undefined, undefined, ITypeLectureListReqQuery>,
+    res: Response,
+    jwtPayload: JwtPayload
+  ) {
     const result: ITypeLectureListResBody | string = await lmsController.lectureListController(
       jwtPayload,
       req.query.all == 'true'
@@ -94,18 +82,12 @@ class LmsController extends controller {
   }
 
   @loggedRouter('lms', 'ea')
-  private async eaRoute(req: Request<undefined, undefined, undefined, ITypeEnrolAddReqQuery>, res: Response) {
-    const authHeader = req.header('Authorization')
-    if (undefined == authHeader) {
-      res.status(401).json()
-      return [401, {}]
-    }
-    const jwtPayload: JwtPayload | string = verify(authHeader)
-    if ('string' == typeof jwtPayload) {
-      res.status(401).json()
-      return [401, {}]
-    }
-
+  @checkAuth('stdt')
+  private async eaRoute(
+    req: Request<undefined, undefined, undefined, ITypeEnrolAddReqQuery>,
+    res: Response,
+    jwtPayload: JwtPayload
+  ) {
     const result = {
       result: await lmsController.enrolAddController(jwtPayload, req.query)
     }
@@ -120,21 +102,13 @@ class LmsController extends controller {
   }
 
   @loggedRouter('lms', 'ba')
+  @checkAuth('prof')
+  @checkLecture()
   private async baRoute(
     req: Request<undefined, undefined, ITypeBoardAddReqBody, ITypeBoardAddReqQuery>,
-    res: Response
+    res: Response,
+    _: JwtPayload
   ) {
-    const authHeader = req.header('Authorization')
-    if (undefined == authHeader) {
-      res.status(401).json()
-      return [401, {}]
-    }
-    const jwtPayload: JwtPayload | string = verify(authHeader)
-    if ('string' == typeof jwtPayload) {
-      res.status(401).json()
-      return [401, {}]
-    }
-
     const result = {
       result: await lmsController.boardAddController(req.body, req.query)
     }
@@ -149,18 +123,13 @@ class LmsController extends controller {
   }
 
   @loggedRouter('lms', 'bl')
-  private async blRoute(req: Request<undefined, undefined, undefined, ITypeBoardListReqQuery>, res: Response) {
-    const authHeader = req.header('Authorization')
-    if (undefined == authHeader) {
-      res.status(401).json()
-      return [401, {}]
-    }
-    const jwtPayload: JwtPayload | string = verify(authHeader)
-    if ('string' == typeof jwtPayload) {
-      res.status(401).json()
-      return [401, {}]
-    }
-
+  @checkAuth('all')
+  @checkLecture()
+  private async blRoute(
+    req: Request<undefined, undefined, undefined, ITypeBoardListReqQuery>,
+    res: Response,
+    jwtPayload: JwtPayload
+  ) {
     const result: ITypeBoardListResBody | string = await lmsController.boardListController(jwtPayload, req.query)
 
     if (result == 'err') {
@@ -173,18 +142,13 @@ class LmsController extends controller {
   }
 
   @loggedRouter('lms', 'bd')
-  private async bdRoute(req: Request<undefined, undefined, undefined, ITypeBoardDetailReqQuery>, res: Response) {
-    const authHeader = req.header('Authorization')
-    if (undefined == authHeader) {
-      res.status(401).json()
-      return [401, {}]
-    }
-    const jwtPayload: JwtPayload | string = verify(authHeader)
-    if ('string' == typeof jwtPayload) {
-      res.status(401).json()
-      return [401, {}]
-    }
-
+  @checkAuth('all')
+  @checkLecture()
+  private async bdRoute(
+    req: Request<undefined, undefined, undefined, ITypeBoardDetailReqQuery>,
+    res: Response,
+    jwtPayload: JwtPayload
+  ) {
     const result: ITypeBoardDetailResBody | string = await lmsController.boardDetailController(jwtPayload, req.query)
 
     if (result == 'err') {

@@ -142,12 +142,13 @@ class LmsControllerClass {
     query: ITypeBoardDetailReqQuery
   ): Promise<ITypeBoardDetailResBody | string> {
     try {
-      const result = await lmsService.detailBoardByBoardId(query.id)
+      const result = await lmsService.detailBoardByBoardId(query.id, query.board_id)
       if (undefined == result) {
         return 'err'
       }
       return {
         id: Number(result.id),
+        lecture_id: Number(result.lectureId),
         title: String(result.title),
         content: String(result.content)
       }
